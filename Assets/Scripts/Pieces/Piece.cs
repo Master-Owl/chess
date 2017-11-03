@@ -22,8 +22,7 @@ public abstract class Piece : MonoBehaviour {
     protected void InitPiece(GameObject tile, PieceType type) {
         this.tile = tile.GetComponent<Tile>();
         this.type = type;
-        gameObject.transform.parent = tile.transform;
-        gameObject.transform.position = new Vector2(0, 0);
+        gameObject.transform.SetParent(tile.transform, false);
         gameObject.transform.localScale = new Vector2(2, 2);
         gameObject.name = type.ToString();
     }

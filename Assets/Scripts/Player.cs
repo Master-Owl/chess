@@ -61,8 +61,8 @@ public class Player : MonoBehaviour {
 		r1.InitRook(tiles[new Location(Letter.A, backRow)], playerColor);
 		k1.InitKnight(tiles[ new Location(Letter.B, backRow)], playerColor);
 		b1.InitBishop(tiles[new Location(Letter.C, backRow)], playerColor);
-		K.InitKing(tiles[new Location(Letter.D, backRow)], playerColor);
-		Q.InitQueen(tiles[new Location(Letter.E, backRow)], playerColor);
+		Q.InitQueen(tiles[new Location(Letter.D, backRow)], playerColor);
+		K.InitKing(tiles[new Location(Letter.E, backRow)], playerColor);
 		b2.InitBishop(tiles[new Location(Letter.F, backRow)], playerColor);
 		k2.InitKnight(tiles[new Location(Letter.G, backRow)], playerColor);
 		r2.InitRook(tiles[new Location(Letter.H, backRow)], playerColor);
