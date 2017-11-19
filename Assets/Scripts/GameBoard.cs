@@ -6,7 +6,11 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour {
 
 	private Dictionary<Location, GameObject> tiles;
-	private AudioClip clip = null;
+	private AudioClip pieceClick = null;
+	private List<AudioClip> invalidMove = new List<AudioClip>();
+	private Piece activePiece = null;
+	private System.Random rand = new System.Random();
+
 	public AudioSource audioSource = null;
 
 	// Use this for initialization
@@ -16,7 +20,9 @@ public class GameBoard : MonoBehaviour {
 		gameObject.transform.parent = Camera.main.transform;
 		if (audioSource == null)
 			audioSource = gameObject.AddComponent<AudioSource>();
-		clip = Resources.Load<AudioClip>("Sounds/test_click");
+		pieceClick = Resources.Load<AudioClip>("Sounds/test_click");
+		invalidMove.Add(Resources.Load<AudioClip>("Sounds/no_1"));
+		invalidMove.Add(Resources.Load<AudioClip>("Sounds/no_2"));
 	}
 	
 	// Update is called once per frame
@@ -25,8 +31,39 @@ public class GameBoard : MonoBehaviour {
 	}
 
 	public void TileClicked(Tile tile) {
-		if (tile.HasPiece()){
-			audioSource.PlayOneShot(clip);
+		Debug.Log(tile.ToString());
+		if (tile.HasPiece()) {
+			if (activePiece == null) {
+				activePiece = tile.GetPiece();
+				audioSource.PlayOneShot(pieceClick);
+				Debug.Log(activePiece);
+			}
+			else {
+                // If the piece color of the active piece matches the clicked piece, swap active pieces
+                if (activePiece.GetColor() == tile.GetPiece().GetComponent<Piece>().GetColor()) {
+                    activePiece = tile.GetPiece();
+                    Debug.Log("Changed Active: " + activePiece.ToString());
+                }
+				else if (activePiece.IsValidMove(tile)) {
+					activePiece.MovePiece(tile);
+					activePiece = null;
+				}
+				else {
+					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
+				}
+			}
+		}
+		else {
+			if (activePiece != null) {
+				if (activePiece.IsValidMove(tile)) {
+					activePiece.MovePiece(tile);
+					Debug.Log("Moved " + activePiece.ToString() + " to " + tile.ToString());
+					activePiece = null;
+				}
+				else {
+					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
+				}
+			}
 		}
 	}
 

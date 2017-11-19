@@ -7,7 +7,7 @@ public class EventManager : MonoBehaviour {
     public delegate void ClickAction();
     public static event ClickAction OnTileClicked;
 
-    void OnGUI() {
+    void Update() {
 		if (Input.GetMouseButtonDown(0) && MouseInBounds() && OnTileClicked != null)
 			OnTileClicked();		
     }

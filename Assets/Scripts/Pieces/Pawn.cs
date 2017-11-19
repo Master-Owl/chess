@@ -62,7 +62,7 @@ public class Pawn : Piece {
 		}
 	}
 
-	override public void Move(GameObject tile) {
+	override public void MovePiece(Tile tile) {
 		this.tile = tile.GetComponent<Tile>();
 		hasMoved = true;
 	}

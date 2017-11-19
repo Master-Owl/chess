@@ -31,11 +31,16 @@ public abstract class Piece : MonoBehaviour {
 
     public abstract bool IsValidMove(Tile t);
 
-    public virtual void Move(GameObject tile) {
-        gameObject.transform.parent = tile.transform;
-        gameObject.transform.position = new Vector2(0, 0);
-        this.tile = tile.GetComponent<Tile>(); 
+    public virtual void MovePiece(Tile tile) {
+        gameObject.transform.SetParent(tile.transform, false);
+        this.tile.RemovePiece();
+        this.tile = tile; 
+        this.tile.SetPiece(this);
     }
+
+    public Tile GetTile() { return tile; }
+
+    public Player.PlayerColor GetColor() { return pieceColor; }
 
     public Location GetLocation() { return this.tile.GetLocation(); }
 }

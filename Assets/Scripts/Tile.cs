@@ -46,8 +46,6 @@ public class Tile : MonoBehaviour {
 		
 	}
 
-	// MOUSE INPUT IS IN SCREEN COORDS
-	// WORLD COORDS ARE THE EDITOR'S COORDINATES
 	void Clicked() {
 		Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		if (boundingBox.Contains(v)) {
@@ -55,7 +53,13 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
-	public void SetPiece(Piece piece) { this.currentPiece = piece; }
+	public void SetPiece(Piece piece) {
+		this.currentPiece = piece;
+	}
+
+	public void RemovePiece() {
+		this.currentPiece = null;
+	}
 
 	public bool HasPiece() { return currentPiece != null; }
 
@@ -64,7 +68,6 @@ public class Tile : MonoBehaviour {
 	public Location GetLocation() { return location; }
 
 	override public string ToString() {
-		return "Tile [" + location.ToString() + "] | " +
-			"X: " + transform.position.x + "  Y: " + transform.position.y;
+		return "Tile [" + location.ToString() + "]";
 	}
 }
