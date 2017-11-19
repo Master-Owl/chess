@@ -6,16 +6,28 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour {
 
 	private Dictionary<Location, GameObject> tiles;
+	private AudioClip clip = null;
+	public AudioSource audioSource = null;
 
 	// Use this for initialization
 	void Start () {
 		gameObject.name = "Game Board";
 		gameObject.tag = "Game Board";
+		gameObject.transform.parent = Camera.main.transform;
+		if (audioSource == null)
+			audioSource = gameObject.AddComponent<AudioSource>();
+		clip = Resources.Load<AudioClip>("Sounds/test_click");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void TileClicked(Tile tile) {
+		if (tile.HasPiece()){
+			audioSource.PlayOneShot(clip);
+		}
 	}
 
 	public void InitBoard() {
@@ -26,8 +38,8 @@ public class GameBoard : MonoBehaviour {
 	public Dictionary<Location, GameObject> GetTiles() { return tiles; }
 
 	private void InitTiles() {
-		int x = -20;
-		int y = -20;
+		float x = -20;
+		float y = -20;
 		bool dark = true;
 		Sprite light_tile = Resources.Load<Sprite>("Graphics/Tiles/tile-6");
 		Sprite dark_tile  = Resources.Load<Sprite>("Graphics/Tiles/tile-2");
@@ -36,7 +48,7 @@ public class GameBoard : MonoBehaviour {
 			for (int i = 1; i <= 8; ++i) {
 				Location location = new Location(letter, i);
 				Tile tile = new GameObject().AddComponent<Tile>();
-				tile.InitTile(location);
+				tile.InitTile(location, this);
 				tile.SetCoordinates(x, y);
 				if (dark) tile.AddSprite(dark_tile);
 				else	  tile.AddSprite(light_tile);				
