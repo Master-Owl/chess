@@ -5,6 +5,7 @@ using UnityEngine;
 public class MouseMovement : MonoBehaviour {
 
 	private Piece selectedPiece = null;
+	private float pieceSpeed = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,7 @@ public class MouseMovement : MonoBehaviour {
 				Vector2.Lerp(
 					selectedPiece.transform.position, 
 					Camera.main.ScreenToWorldPoint(Input.mousePosition), 
-					Time.deltaTime * 10);
+					Time.deltaTime * pieceSpeed);
 		}
 	}
 
@@ -27,7 +28,7 @@ public class MouseMovement : MonoBehaviour {
 	}
 
 	public void RemoveSelectedPiece() { 
-		this.selectedPiece.transform.localPosition = new Vector2(0, 0); // Put piece back on previous tile in case of piece swap/invalid move
-		this.selectedPiece = null; 
+		selectedPiece.transform.localPosition = new Vector2(0, 0); // Put piece back on previous tile in case of piece swap/invalid move
+		selectedPiece = null; 
 	}
 }
