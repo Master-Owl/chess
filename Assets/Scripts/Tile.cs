@@ -47,8 +47,8 @@ public class Tile : MonoBehaviour {
 	}
 
 	void Clicked() {
-		Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		if (boundingBox.Contains(v)) {
+		Vector2 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		if (boundingBox.Contains(point)) {
 			gameBoard.TileClicked(this);
 		}
 	}

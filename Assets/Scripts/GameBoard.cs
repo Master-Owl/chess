@@ -6,21 +6,21 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour {
 
 	private Dictionary<Location, GameObject> tiles;
-	private AudioClip pieceClick = null;
+	private AudioClip validMove = null;
 	private List<AudioClip> invalidMove = new List<AudioClip>();
 	private Piece activePiece = null;
 	private System.Random rand = new System.Random();
-
-	public AudioSource audioSource = null;
+	private MouseMovement mouseMovement = null;
+	private AudioSource audioSource = null;
 
 	// Use this for initialization
 	void Start () {
 		gameObject.name = "Game Board";
 		gameObject.tag = "Game Board";
 		gameObject.transform.parent = Camera.main.transform;
-		if (audioSource == null)
-			audioSource = gameObject.AddComponent<AudioSource>();
-		pieceClick = Resources.Load<AudioClip>("Sounds/test_click");
+		mouseMovement = gameObject.AddComponent<MouseMovement>();
+		audioSource = gameObject.AddComponent<AudioSource>();
+		validMove = Resources.Load<AudioClip>("Sounds/test_click");
 		invalidMove.Add(Resources.Load<AudioClip>("Sounds/no_1"));
 		invalidMove.Add(Resources.Load<AudioClip>("Sounds/no_2"));
 	}
@@ -35,19 +35,23 @@ public class GameBoard : MonoBehaviour {
 		if (tile.HasPiece()) {
 			if (activePiece == null) {
 				activePiece = tile.GetPiece();
-				audioSource.PlayOneShot(pieceClick);
+				mouseMovement.SetSelectedPiece(activePiece);
 				Debug.Log(activePiece);
 			}
 			else {
                 // If the piece color of the active piece matches the clicked piece, swap active pieces
                 if (activePiece.GetColor() == tile.GetPiece().GetComponent<Piece>().GetColor()) {
+					mouseMovement.RemoveSelectedPiece();
                     activePiece = tile.GetPiece();
+					mouseMovement.SetSelectedPiece(activePiece);
                     Debug.Log("Changed Active: " + activePiece.ToString());
                 }
 				else if (activePiece.IsValidMove(tile)) {
+					mouseMovement.RemoveSelectedPiece();
 					activePiece.MovePiece(tile);
-					activePiece = null;
-				}
+                    activePiece = null;
+                    audioSource.PlayOneShot(validMove);
+                }
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
 				}
@@ -56,10 +60,12 @@ public class GameBoard : MonoBehaviour {
 		else {
 			if (activePiece != null) {
 				if (activePiece.IsValidMove(tile)) {
+					mouseMovement.RemoveSelectedPiece();
 					activePiece.MovePiece(tile);
 					Debug.Log("Moved " + activePiece.ToString() + " to " + tile.ToString());
-					activePiece = null;
-				}
+                    activePiece = null;
+                    audioSource.PlayOneShot(validMove);
+                }
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
 				}
