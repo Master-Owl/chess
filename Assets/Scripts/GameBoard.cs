@@ -35,39 +35,54 @@ public class GameBoard : MonoBehaviour {
 		if (tile.HasPiece()) {
 			if (activePiece == null) {
 				activePiece = tile.GetPiece();
-				mouseMovement.SetSelectedPiece(activePiece);
-				Debug.Log(activePiece);
+                mouseMovement.SetSelectedPiece(activePiece);
 			}
 			else {
+
+				// If the same tile was clicked
+				if (activePiece.GetTile().Equals(tile)) {
+                    mouseMovement.RemoveSelectedPiece();
+                    activePiece = null;
+                }
+
                 // If the piece color of the active piece matches the clicked piece, swap active pieces
-                if (activePiece.GetColor() == tile.GetPiece().GetComponent<Piece>().GetColor()) {
+                else if (activePiece.GetColor() == tile.GetPiece().GetComponent<Piece>().GetColor()) {
 					mouseMovement.RemoveSelectedPiece();
                     activePiece = tile.GetPiece();
 					mouseMovement.SetSelectedPiece(activePiece);
-                    Debug.Log("Changed Active: " + activePiece.ToString());
                 }
+
+				// If the clicked tile is a valid movement for piece
 				else if (activePiece.IsValidMove(tile)) {
-					mouseMovement.RemoveSelectedPiece();
-					activePiece.MovePiece(tile);
-                    activePiece = null;
                     audioSource.PlayOneShot(validMove);
+					Debug.Log("Captured opponent piece " + tile.GetPiece().ToString());
+                    mouseMovement.RemoveSelectedPiece();	// Stop dragging piece around
+					activePiece.GetTile().RemovePiece();	// Remove reference to piece on old tile
+                    activePiece.MovePiece(tile);			// Put piece on new tile
+                    activePiece = null;						// Remove reference to moved piece
                 }
+
+				// Tile clicked is not valid movement for piece
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
+					mouseMovement.RemoveSelectedPiece();	// Reset active piece to previous tile
+					activePiece = null;
 				}
 			}
 		}
 		else {
 			if (activePiece != null) {
 				if (activePiece.IsValidMove(tile)) {
-					mouseMovement.RemoveSelectedPiece();
-					activePiece.MovePiece(tile);
-					Debug.Log("Moved " + activePiece.ToString() + " to " + tile.ToString());
-                    activePiece = null;
                     audioSource.PlayOneShot(validMove);
+                    mouseMovement.RemoveSelectedPiece();    // Stop dragging piece around
+                    activePiece.GetTile().RemovePiece();	// Remove reference to piece on old tile
+                    activePiece.MovePiece(tile);			// Put piece on new tile
+                    activePiece = null;						// Remove reference to moved piece
                 }
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
+					mouseMovement.RemoveSelectedPiece();	// Reset active piece to previous tile
+					activePiece = null;
 				}
 			}
 		}

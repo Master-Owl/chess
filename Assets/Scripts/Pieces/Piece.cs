@@ -43,4 +43,22 @@ public abstract class Piece : MonoBehaviour {
     public Player.PlayerColor GetColor() { return pieceColor; }
 
     public Location GetLocation() { return this.tile.GetLocation(); }
+
+    override public string ToString() {
+        return pieceColor.ToString() + " " + type.ToString();
+    }
+
+    override public bool Equals(object obj) {
+        if (!(obj is Piece)) return false;
+        Piece other = (Piece)obj;
+
+        if (!this.pieceColor.Equals(other.pieceColor)) return false;
+        if (!this.type.Equals(other.type)) return false;
+        if (!this.tile.Equals(other.tile)) return false;
+        return true;
+    }
+
+    override public int GetHashCode(){
+        return 7 * (int)type + 9 * (int)pieceColor + (tile == null ? 0 : tile.GetLocation().GetHashCode());
+    }
 }

@@ -7,9 +7,7 @@ public class Tile : MonoBehaviour {
     private Location location = null;
 	private GameBoard gameBoard = null;
 	private Rect boundingBox;
-	private int x;
-	private int y;
-	public Piece currentPiece = null;
+	public  Piece currentPiece = null;
 
 	public void InitTile(Location location, GameBoard boardInstance) {
 		this.location = location;
@@ -68,6 +66,19 @@ public class Tile : MonoBehaviour {
 	public Location GetLocation() { return location; }
 
 	override public string ToString() {
-		return "Tile [" + location.ToString() + "]";
+		return "Tile [" + location.ToString() + "]  Piece: " + 
+			(HasPiece() ? currentPiece.ToString() : "None");
 	}
+
+	override public bool Equals(object obj) {
+        if (!(obj is Tile)) return false;
+		Tile other = (Tile)obj;
+		
+        if (!this.location.Equals(other.location)) return false;
+		return true;
+	}
+
+    override public int GetHashCode() {
+        return 7 * location.GetHashCode();
+    }
 }

@@ -14,15 +14,17 @@ public class MouseMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (selectedPiece != null) {
-			selectedPiece.transform.position = 
-				Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            selectedPiece.transform.position = 
+				Vector2.Lerp(selectedPiece.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), 1);
 		}
 	}
 
 	public void SetSelectedPiece(Piece piece) {
 		selectedPiece = piece;
-		selectedPiece.transform.SetParent(null);
 	}
 
-	public void RemoveSelectedPiece() { this.selectedPiece = null; }
+	public void RemoveSelectedPiece() { 
+		this.selectedPiece.transform.localPosition = new Vector2(0, 0); // Put piece back on previous tile in case of piece swap/invalid move
+		this.selectedPiece = null; 
+	}
 }
