@@ -15,7 +15,10 @@ public class MouseMovement : MonoBehaviour {
 	void Update () {
 		if (selectedPiece != null) {
             selectedPiece.transform.position = 
-				Vector2.Lerp(selectedPiece.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), 1);
+				Vector2.Lerp(
+					selectedPiece.transform.position, 
+					Camera.main.ScreenToWorldPoint(Input.mousePosition), 
+					Time.deltaTime * 10);
 		}
 	}
 
