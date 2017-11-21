@@ -27,7 +27,7 @@ public class GameBoard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetMouseButtonDown(1)) DeselectPiece();
 	}
 
 	public void TileClicked(Tile tile) {
@@ -41,8 +41,7 @@ public class GameBoard : MonoBehaviour {
 
 				// If the same tile was clicked
 				if (activePiece.GetTile().Equals(tile)) {
-                    mouseMovement.RemoveSelectedPiece();
-                    activePiece = null;
+                    DeselectPiece();
                 }
 
                 // If the piece color of the active piece matches the clicked piece, swap active pieces
@@ -57,31 +56,28 @@ public class GameBoard : MonoBehaviour {
 				else if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
                     audioSource.PlayOneShot(validMove);
 					Debug.Log("Captured opponent piece " + tile.GetPiece().ToString());
-                    mouseMovement.RemoveSelectedPiece();	// Stop dragging piece around
-                    activePiece.MovePiece(tile);			// Put piece on new tile
-                    activePiece = null;						// Remove reference to moved piece
+                    activePiece.MovePiece(tile);
+                    DeselectPiece();
                 }
 
 				// Tile clicked is not valid movement for piece
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
-					mouseMovement.RemoveSelectedPiece();	// Reset active piece to previous tile
-					activePiece = null;
-				}
+                    DeselectPiece();
+                }
 			}
 		}
 		else {
 			if (activePiece != null) {
 				if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
                     audioSource.PlayOneShot(validMove);
-                    mouseMovement.RemoveSelectedPiece();    // Stop dragging piece around
-                    activePiece.MovePiece(tile);			// Put piece on new tile
-                    activePiece = null;						// Remove reference to moved piece
+                    activePiece.MovePiece(tile);
+                    DeselectPiece();
+
                 }
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
-					mouseMovement.RemoveSelectedPiece();	// Reset active piece to previous tile
-					activePiece = null;
+					DeselectPiece();
 				}
 			}
 		}
@@ -120,6 +116,11 @@ public class GameBoard : MonoBehaviour {
 		}
 
 		return canMoveTo;
+	}
+
+	private void DeselectPiece() {
+        mouseMovement.RemoveSelectedPiece();
+        activePiece = null;
 	}
 
 	public void InitBoard() {

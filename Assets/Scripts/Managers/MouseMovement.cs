@@ -28,7 +28,9 @@ public class MouseMovement : MonoBehaviour {
 	}
 
 	public void RemoveSelectedPiece() { 
-		selectedPiece.transform.localPosition = new Vector2(0, 0); // Put piece back on previous tile in case of piece swap/invalid move
-		selectedPiece = null; 
+		if (selectedPiece != null) {
+			selectedPiece.transform.localPosition = new Vector2(0, 0); // Put piece back on previous tile in case of piece swap/invalid move
+			selectedPiece = null; 
+		}
 	}
 }
