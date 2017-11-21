@@ -28,6 +28,15 @@ public class Player : MonoBehaviour {
 		
 	}
 
+	public void RemovePiece(Piece piece) {
+		if (pieces.Contains(piece)) {
+			pieces.Remove(piece);
+			Destroy(piece.gameObject);
+		}
+	}
+
+	public void ChangeTurn() { isTurn = !isTurn; }
+
 	public bool IsTurn() { return isTurn; }
 
 	public PlayerColor GetColor() { return playerColor; }

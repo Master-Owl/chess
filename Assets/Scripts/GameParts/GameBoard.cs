@@ -55,9 +55,10 @@ public class GameBoard : MonoBehaviour {
 				// If the clicked tile is a valid movement for piece
 				else if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
                     audioSource.PlayOneShot(validMove);
-					Debug.Log("Captured opponent piece " + tile.GetPiece().ToString());
+					CapturePiece(tile.GetPiece());
                     activePiece.MovePiece(tile);
                     DeselectPiece();
+					GameManager.ChangeTurn();
                 }
 
 				// Tile clicked is not valid movement for piece
@@ -73,7 +74,7 @@ public class GameBoard : MonoBehaviour {
                     audioSource.PlayOneShot(validMove);
                     activePiece.MovePiece(tile);
                     DeselectPiece();
-
+					GameManager.ChangeTurn();
                 }
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
@@ -121,6 +122,10 @@ public class GameBoard : MonoBehaviour {
 	private void DeselectPiece() {
         mouseMovement.RemoveSelectedPiece();
         activePiece = null;
+	}
+
+	private void CapturePiece(Piece piece) {
+		GameManager.PieceCaptured(piece);
 	}
 
 	public void InitBoard() {
