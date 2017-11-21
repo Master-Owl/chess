@@ -34,6 +34,7 @@ public abstract class Piece : MonoBehaviour {
     public virtual void MovePiece(Tile tile) {
         gameObject.transform.SetParent(tile.transform, false);
         gameObject.transform.localPosition = new Vector2(0, 0);
+        this.tile.RemovePiece();
         this.tile = tile; 
         this.tile.SetPiece(this);
     }

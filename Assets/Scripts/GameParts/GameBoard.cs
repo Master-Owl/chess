@@ -31,10 +31,10 @@ public class GameBoard : MonoBehaviour {
 	}
 
 	public void TileClicked(Tile tile) {
-		Debug.Log(tile.ToString());
 		if (tile.HasPiece()) {
 			if (activePiece == null) {
-				activePiece = tile.GetPiece();
+                Debug.Log(tile.ToString());
+                activePiece = tile.GetPiece();
                 mouseMovement.SetSelectedPiece(activePiece);
 			}
 			else {
@@ -47,17 +47,17 @@ public class GameBoard : MonoBehaviour {
 
                 // If the piece color of the active piece matches the clicked piece, swap active pieces
                 else if (activePiece.GetColor() == tile.GetPiece().GetComponent<Piece>().GetColor()) {
-					mouseMovement.RemoveSelectedPiece();
+                    Debug.Log(tile.ToString());
+                    mouseMovement.RemoveSelectedPiece();
                     activePiece = tile.GetPiece();
 					mouseMovement.SetSelectedPiece(activePiece);
                 }
 
 				// If the clicked tile is a valid movement for piece
-				else if (activePiece.IsValidMove(tile)) {
+				else if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
                     audioSource.PlayOneShot(validMove);
 					Debug.Log("Captured opponent piece " + tile.GetPiece().ToString());
                     mouseMovement.RemoveSelectedPiece();	// Stop dragging piece around
-					activePiece.GetTile().RemovePiece();	// Remove reference to piece on old tile
                     activePiece.MovePiece(tile);			// Put piece on new tile
                     activePiece = null;						// Remove reference to moved piece
                 }
@@ -72,10 +72,9 @@ public class GameBoard : MonoBehaviour {
 		}
 		else {
 			if (activePiece != null) {
-				if (activePiece.IsValidMove(tile)) {
+				if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
                     audioSource.PlayOneShot(validMove);
                     mouseMovement.RemoveSelectedPiece();    // Stop dragging piece around
-                    activePiece.GetTile().RemovePiece();	// Remove reference to piece on old tile
                     activePiece.MovePiece(tile);			// Put piece on new tile
                     activePiece = null;						// Remove reference to moved piece
                 }
@@ -86,6 +85,41 @@ public class GameBoard : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	// Checks that pieces aren't moving through other pieces
+	private bool OpenPathTo(Tile tile) {
+		if (activePiece == null) return false;
+        Piece.PieceType type = activePiece.GetPieceType();
+		Location from = activePiece.GetTile().GetLocation();
+		Location to   = tile.GetLocation();
+        if (Logic.IsOneTileAway(from, to)) return true;
+
+        bool canMoveTo;
+        bool horizontalMove = from.letter - to.letter != 0;
+
+        switch(type) {
+			case Piece.PieceType.PAWN:
+			case Piece.PieceType.ROOK:
+				canMoveTo = Logic.CanMoveStraight(from, to, horizontalMove, tiles);
+				break;
+
+			case Piece.PieceType.BISHOP:
+				canMoveTo = Logic.CanMoveDiagonal(from, to, tiles);
+				break;
+
+			case Piece.PieceType.QUEEN:
+				bool diagonal = Math.Abs(from.letter - to.letter) == Math.Abs(from.number - to.number);
+				if (diagonal) canMoveTo = Logic.CanMoveDiagonal(from, to, tiles);
+				else canMoveTo = Logic.CanMoveStraight(from, to, horizontalMove, tiles);
+				break;
+			
+			default:
+				canMoveTo = true;
+				break;
+		}
+
+		return canMoveTo;
 	}
 
 	public void InitBoard() {
