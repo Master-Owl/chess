@@ -7,12 +7,14 @@ public class Player : MonoBehaviour {
 
 	public enum PlayerColor { DARK, LIGHT };
 	private bool isTurn;
+	private string playerName;
 	private GameBoard board;
 	public PlayerColor playerColor;
 	public ArrayList pieces;
 
-	public void InitPlayer(PlayerColor color, GameBoard board) {
-		this.playerColor = color;
+	public void InitPlayer(string name, bool isLight, GameBoard board) {
+		this.playerColor = isLight ? PlayerColor.LIGHT : PlayerColor.DARK;
+		this.playerName = name;
 		this.board = board;
 		isTurn = false;
 		InitPieces();

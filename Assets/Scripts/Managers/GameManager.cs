@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour {
 		player_2 =  gameObject.AddComponent<Player>();
 		
 		gameBoard.InitBoard();
-		player_1.InitPlayer(Player.PlayerColor.LIGHT, gameBoard);
-		player_2.InitPlayer(Player.PlayerColor.DARK, gameBoard);
+		player_1.InitPlayer(Menus.Player1Name(), Menus.Player1Light(), gameBoard);
+		player_2.InitPlayer(Menus.Player2Name(), !Menus.Player1Light(), gameBoard);
 		ArrayList pieces = player_1.GetPieces();
 		pieces.AddRange(player_2.GetPieces());
 		gameBoard.PlacePieces(pieces);

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Navigations : MonoBehaviour {
 
+	public GameObject playerPanel;
+	public GameObject tilePanel;
+
 	public void LoadSceneByIndex(int index) {
 		SceneManager.LoadScene(index);
 	}
@@ -15,5 +18,13 @@ public class Navigations : MonoBehaviour {
 		#else
 			Application.Quit();
 		#endif
+	}
+
+	public void EnablePlayerPanel(bool enabled) {
+		playerPanel.SetActive(enabled);
+	}
+
+	public void EnableTilePanel(bool enabled) {
+		tilePanel.SetActive(enabled);
 	}
 }
