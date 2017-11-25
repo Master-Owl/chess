@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -22,7 +23,6 @@ public class GameManager : MonoBehaviour {
 		ArrayList pieces = player_1.GetPieces();
 		pieces.AddRange(player_2.GetPieces());
 		gameBoard.PlacePieces(pieces);
-        player_1.ChangeTurn(); // Make player 1 the starting player
     }
 	
 	// The current player has captured their opponent's piece (meaning opponent loses a piece)

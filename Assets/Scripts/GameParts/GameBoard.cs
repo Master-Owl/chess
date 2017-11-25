@@ -17,6 +17,7 @@ public class GameBoard : MonoBehaviour {
 	void Start () {
 		gameObject.name = "Game Board";
 		gameObject.tag = "Game Board";
+		gameObject.layer = 8;
 		gameObject.transform.parent = Camera.main.transform;
 		mouseMovement = gameObject.AddComponent<MouseMovement>();
 		audioSource = gameObject.AddComponent<AudioSource>();

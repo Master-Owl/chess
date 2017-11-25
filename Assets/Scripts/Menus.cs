@@ -15,6 +15,7 @@ public class Menus : MonoBehaviour {
 		backgroundImages.Add(Resources.Load<Sprite>("Graphics/Backgrounds/MenuBackground1"));
 		backgroundImages.Add(Resources.Load<Sprite>("Graphics/Backgrounds/MenuBackground2"));
 		backgroundImages.Add(Resources.Load<Sprite>("Graphics/Backgrounds/MenuBackground3"));
+		backgroundImages.Add(Resources.Load<Sprite>("Graphics/Backgrounds/MenuBackground4"));
 
 		Image backgroundImage = GameObject.Find("BackgroundImage").GetComponent<Image>();
 		backgroundImage.sprite = backgroundImages[rand.Next(0, backgroundImages.Count)];

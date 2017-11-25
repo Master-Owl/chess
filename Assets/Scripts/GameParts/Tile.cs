@@ -29,6 +29,7 @@ public class Tile : MonoBehaviour {
 	void Awake() {
 		gameObject.name = "Tile";
 		gameObject.tag = "Tile";
+		gameObject.layer = 8;
 	}
 
 	void OnEnable() {
