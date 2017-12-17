@@ -28,12 +28,16 @@ public class GameManager : MonoBehaviour {
 	// The current player has captured their opponent's piece (meaning opponent loses a piece)
 	public static void PieceCaptured(Piece piece) {
 		if (player_1.IsTurn()) {
-			player_2.RemovePiece(piece);
+			if (!player_2.RemovePiece(piece))
+				Debug.LogWarning(piece.ToString() + " doesn't exist in collection for " + player_2.ToString());
 		}
 		else {
-			player_1.RemovePiece(piece);
+			if (!player_1.RemovePiece(piece))
+				Debug.LogWarning(piece.ToString() + " doesn't exist in collection for " + player_1.ToString());
 		}
+		ChangeTurn();
 	}
+	
 
 	public static void ChangeTurn() {
 		player_1.ChangeTurn();

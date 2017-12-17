@@ -30,11 +30,13 @@ public class Player : MonoBehaviour {
 		
 	}
 
-	public void RemovePiece(Piece piece) {
+	public bool RemovePiece(Piece piece) {
 		if (pieces.Contains(piece)) {
 			pieces.Remove(piece);
 			Destroy(piece.gameObject);
+			return true;
 		}
+		return false;
 	}
 
 	public void ChangeTurn() { isTurn = !isTurn; }
@@ -93,5 +95,9 @@ public class Player : MonoBehaviour {
 			pieces.Add(p);
 		}
 	
+	}
+
+	public override string ToString() {
+		return this.playerName;
 	}
 }
