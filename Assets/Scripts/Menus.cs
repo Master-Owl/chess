@@ -53,11 +53,11 @@ public class Menus : MonoBehaviour {
 		return Resources.Load<Sprite>("Graphics/Tiles/tile-2");
 	}
 
-	public void SetLightTile(GameObject tile) {
-		lightTile = tile.GetComponent<Image>().sprite;
-	}
+    public static void SetLightTile(Image tile) {
+        lightTile = tile.sprite;
+    }
 
-    public void SetDarkTile(GameObject tile) {
-        darkTile = tile.GetComponent<Image>().sprite;
+    public static void SetDarkTile(Image tile) {
+        darkTile = tile.sprite;
     }
 }

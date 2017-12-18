@@ -34,7 +34,13 @@ public class TilePicker : MonoBehaviour {
 		if (selectedTile == null) return;
 		GameObject clicked = EventSystem.current.currentSelectedGameObject;
 		selectedTile.GetComponent<Image>().sprite = clicked.GetComponent<Image>().sprite;
-		EnableTilePicking(false);
+
+		if (selectedTile.name == "LightTile") 
+			Menus.SetLightTile(selectedTile.GetComponent<Image>());
+		else if (selectedTile.name == "DarkTile")
+            Menus.SetDarkTile(selectedTile.GetComponent<Image>());
+			
+        EnableTilePicking(false);
 		selectedTile = null;
 	}
 }
