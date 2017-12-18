@@ -35,5 +35,6 @@ public class TilePicker : MonoBehaviour {
 		GameObject clicked = EventSystem.current.currentSelectedGameObject;
 		selectedTile.GetComponent<Image>().sprite = clicked.GetComponent<Image>().sprite;
 		EnableTilePicking(false);
+		selectedTile = null;
 	}
 }

@@ -6,20 +6,22 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	private GameBoard gameBoard;
+	private UIManager uIManager;
 	private static Player player_1;
 	private static Player player_2;
 
 	// Use this for initialization
 	void Start () {
-		if (gameBoard == null)
-			gameBoard = gameObject.AddComponent<GameBoard>();
-		
-		player_1 = gameObject.AddComponent<Player>();
-		player_2 =  gameObject.AddComponent<Player>();
+		uIManager = gameObject.GetComponentInChildren<UIManager>();
+		gameBoard = gameObject.AddComponent<GameBoard>();		
+		player_1  = gameObject.AddComponent<Player>();
+		player_2  = gameObject.AddComponent<Player>();
 		
 		gameBoard.InitBoard();
 		player_1.InitPlayer(Menus.Player1Name(), Menus.Player1Light(), gameBoard);
 		player_2.InitPlayer(Menus.Player2Name(), !Menus.Player1Light(), gameBoard);
+		uIManager.SetPlayer1Name(player_1.GetPlayerName());
+		uIManager.SetPlayer2Name(player_2.GetPlayerName());
 		ArrayList pieces = player_1.GetPieces();
 		pieces.AddRange(player_2.GetPieces());
 		gameBoard.PlacePieces(pieces);
@@ -35,13 +37,18 @@ public class GameManager : MonoBehaviour {
 			if (!player_1.RemovePiece(piece))
 				Debug.LogWarning(piece.ToString() + " doesn't exist in collection for " + player_1.ToString());
 		}
-		ChangeTurn();
 	}
 	
 
 	public static void ChangeTurn() {
 		player_1.ChangeTurn();
 		player_2.ChangeTurn();
+	}
+
+	public static Player GetPlayerTurn() {
+		if (player_1.IsTurn()) 
+			return player_1;
+		return player_2;
 	}
 	
 	// Update is called once per frame

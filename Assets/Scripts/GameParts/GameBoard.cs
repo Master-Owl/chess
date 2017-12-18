@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameBoard : MonoBehaviour {
 
@@ -140,8 +141,8 @@ public class GameBoard : MonoBehaviour {
 		float x = -20;
 		float y = -20;
 		bool dark = true;
-		Sprite light_tile = Resources.Load<Sprite>("Graphics/Tiles/tile-6");
-		Sprite dark_tile  = Resources.Load<Sprite>("Graphics/Tiles/tile-2");
+		Sprite light_tile = Menus.GetLightTile();
+		Sprite dark_tile  = Menus.GetDarkTile();
 
 		foreach (Letter letter in Enum.GetValues(typeof(Letter))) {
 			for (int i = 1; i <= 8; ++i) {

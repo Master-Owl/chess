@@ -729,6 +729,7 @@ GameObject:
   - component: {fileID: 218527133}
   - component: {fileID: 218527132}
   - component: {fileID: 218527135}
+  - component: {fileID: 218527136}
   m_Layer: 5
   m_Name: DarkTile
   m_TagString: Untagged
@@ -804,6 +805,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 218527136}
+        m_MethodName: SetDarkTile
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 218527130}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 218527135}
         m_MethodName: SetSelectedTile
         m_Mode: 2
@@ -862,6 +874,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileContent: {fileID: 1496408692}
+--- !u!114 &218527136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 218527130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c3122909e8cec48b7a12efc1abe4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &223444005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,8 +1093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84b076b579248948b273feeff8dfed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPanel: {fileID: 0}
-  tilePanel: {fileID: 0}
+  playerPanel: {fileID: 2045148125}
+  tilePanel: {fileID: 1437857006}
 --- !u!1 &256445844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,6 +1485,7 @@ GameObject:
   - component: {fileID: 375295201}
   - component: {fileID: 375295203}
   - component: {fileID: 375295202}
+  - component: {fileID: 375295204}
   m_Layer: 5
   m_Name: BackgroundImage
   m_TagString: Untagged
@@ -1506,7 +1530,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d5d3e7f5a8a61a64f8b439bcab1016aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1520,6 +1544,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 375295200}
+--- !u!114 &375295204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 375295200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c3122909e8cec48b7a12efc1abe4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &411309362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,6 +1567,7 @@ GameObject:
   - component: {fileID: 411309365}
   - component: {fileID: 411309364}
   - component: {fileID: 411309367}
+  - component: {fileID: 411309368}
   m_Layer: 5
   m_Name: LightTile
   m_TagString: Untagged
@@ -1607,6 +1643,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 411309368}
+        m_MethodName: SetLightTile
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 411309362}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 411309367}
         m_MethodName: SetSelectedTile
         m_Mode: 2
@@ -1665,6 +1712,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileContent: {fileID: 1496408692}
+--- !u!114 &411309368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 411309362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c3122909e8cec48b7a12efc1abe4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &436114454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2452,7 +2510,6 @@ GameObject:
   - component: {fileID: 730000760}
   - component: {fileID: 730000759}
   - component: {fileID: 730000765}
-  - component: {fileID: 730000763}
   - component: {fileID: 730000764}
   m_Layer: 5
   m_Name: Canvas
@@ -2540,17 +2597,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &730000763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 730000758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7c3122909e8cec48b7a12efc1abe4d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &730000764
 AudioSource:
   m_ObjectHideFlags: 0

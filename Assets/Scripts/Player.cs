@@ -20,6 +20,10 @@ public class Player : MonoBehaviour {
 		InitPieces();
 	}
 
+	public string GetPlayerName() {
+		return this.playerName;
+	}
+
 	// Use this for initialization
 	void Start () {
 
