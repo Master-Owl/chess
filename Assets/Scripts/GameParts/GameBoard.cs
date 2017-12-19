@@ -29,10 +29,13 @@ public class GameBoard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(1)) DeselectPiece();
+		if (Input.GetMouseButtonDown(1)) DeselectPiece(); // Right click to deselect a piece
 	}
 
 	public void TileClicked(Tile tile) {
+		if (activePiece == null && !TurnManager.IsValidPieceSelection(tile.GetPiece())) 
+			return;
+
 		if (tile.HasPiece()) {
 			if (activePiece == null) {
                 Debug.Log(tile.ToString());
@@ -57,10 +60,10 @@ public class GameBoard : MonoBehaviour {
 				// If the clicked tile is a valid movement for piece
 				else if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
                     audioSource.PlayOneShot(validMove);
-					CapturePiece(tile.GetPiece());
+					GameManager.PieceCaptured(tile.GetPiece());
                     activePiece.MovePiece(tile);
                     DeselectPiece();
-					GameManager.ChangeTurn();
+					TurnManager.ChangeTurn();
                 }
 
 				// Tile clicked is not valid movement for piece
@@ -76,7 +79,7 @@ public class GameBoard : MonoBehaviour {
                     audioSource.PlayOneShot(validMove);
                     activePiece.MovePiece(tile);
                     DeselectPiece();
-					GameManager.ChangeTurn();
+					TurnManager.ChangeTurn();
                 }
 				else {
 					audioSource.PlayOneShot(invalidMove[rand.Next(0, invalidMove.Count)]);
@@ -124,10 +127,6 @@ public class GameBoard : MonoBehaviour {
 	private void DeselectPiece() {
         mouseMovement.RemoveSelectedPiece();
         activePiece = null;
-	}
-
-	private void CapturePiece(Piece piece) {
-		GameManager.PieceCaptured(piece);
 	}
 
 	public void InitBoard() {

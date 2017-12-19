@@ -9,7 +9,7 @@ public class Menus : MonoBehaviour {
 	private static string player2Name = "Player 2";
 	private static Sprite lightTile;
 	private static Sprite darkTile;
-	private static bool p1Light;
+	private static bool p1Light = true;
 	private List<Sprite> backgroundImages = new List<Sprite>();
 	private System.Random rand = new System.Random();
 
@@ -32,7 +32,7 @@ public class Menus : MonoBehaviour {
 	}
 
 	public void Player1LightColor(bool isLight) {
-		p1Light = isLight;
+        p1Light = isLight;
 	}
 
 	public static string Player1Name() { return player1Name; }

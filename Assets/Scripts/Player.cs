@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
 		this.playerColor = isLight ? PlayerColor.LIGHT : PlayerColor.DARK;
 		this.playerName = name;
 		this.board = board;
-		isTurn = false;
+		isTurn = isLight;
 		InitPieces();
 	}
 
