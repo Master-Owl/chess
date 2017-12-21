@@ -62,8 +62,12 @@ public class Pawn : Piece {
 		}
 	}
 
-	override public void Move(GameObject tile) {
-		this.tile = tile.GetComponent<Tile>();
+	override public void MovePiece(Tile tile) {
+        gameObject.transform.SetParent(tile.transform, false);
+        gameObject.transform.localPosition = new Vector2(0, 0);
+		this.tile.RemovePiece();
+        this.tile = tile;
+        this.tile.SetPiece(this);
 		hasMoved = true;
 	}
 }

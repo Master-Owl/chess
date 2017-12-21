@@ -7,15 +7,23 @@ public class Player : MonoBehaviour {
 
 	public enum PlayerColor { DARK, LIGHT };
 	private bool isTurn;
+	private bool hasLost;
+	private string playerName;
 	private GameBoard board;
 	public PlayerColor playerColor;
 	public ArrayList pieces;
 
-	public void InitPlayer(PlayerColor color, GameBoard board) {
-		this.playerColor = color;
+	public void InitPlayer(string name, bool isLight, GameBoard board) {
+		this.playerColor = isLight ? PlayerColor.LIGHT : PlayerColor.DARK;
+		this.playerName = name;
 		this.board = board;
-		isTurn = false;
+		isTurn = isLight;
+		hasLost = false;
 		InitPieces();
+	}
+
+	public string GetPlayerName() {
+		return this.playerName;
 	}
 
 	// Use this for initialization
@@ -27,6 +35,21 @@ public class Player : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public bool RemovePiece(Piece piece) {
+		if (pieces.Contains(piece)) {
+			pieces.Remove(piece);
+			if (piece.GetPieceType() == Piece.PieceType.KING)
+				hasLost = true;
+			Destroy(piece.gameObject);
+			return true;
+		}
+		return false;
+	}
+
+	public bool HasLost() { return hasLost; }
+
+	public void ChangeTurn() { isTurn = !isTurn; }
 
 	public bool IsTurn() { return isTurn; }
 
@@ -61,8 +84,8 @@ public class Player : MonoBehaviour {
 		r1.InitRook(tiles[new Location(Letter.A, backRow)], playerColor);
 		k1.InitKnight(tiles[ new Location(Letter.B, backRow)], playerColor);
 		b1.InitBishop(tiles[new Location(Letter.C, backRow)], playerColor);
-		K.InitKing(tiles[new Location(Letter.D, backRow)], playerColor);
-		Q.InitQueen(tiles[new Location(Letter.E, backRow)], playerColor);
+		Q.InitQueen(tiles[new Location(Letter.D, backRow)], playerColor);
+		K.InitKing(tiles[new Location(Letter.E, backRow)], playerColor);
 		b2.InitBishop(tiles[new Location(Letter.F, backRow)], playerColor);
 		k2.InitKnight(tiles[new Location(Letter.G, backRow)], playerColor);
 		r2.InitRook(tiles[new Location(Letter.H, backRow)], playerColor);
@@ -82,5 +105,9 @@ public class Player : MonoBehaviour {
 			pieces.Add(p);
 		}
 	
+	}
+
+	public override string ToString() {
+		return this.playerName;
 	}
 }
