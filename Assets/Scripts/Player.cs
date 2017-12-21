@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 
 	public enum PlayerColor { DARK, LIGHT };
 	private bool isTurn;
+	private bool hasLost;
 	private string playerName;
 	private GameBoard board;
 	public PlayerColor playerColor;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour {
 		this.playerName = name;
 		this.board = board;
 		isTurn = isLight;
+		hasLost = false;
 		InitPieces();
 	}
 
@@ -37,11 +39,15 @@ public class Player : MonoBehaviour {
 	public bool RemovePiece(Piece piece) {
 		if (pieces.Contains(piece)) {
 			pieces.Remove(piece);
+			if (piece.GetPieceType() == Piece.PieceType.KING)
+				hasLost = true;
 			Destroy(piece.gameObject);
 			return true;
 		}
 		return false;
 	}
+
+	public bool HasLost() { return hasLost; }
 
 	public void ChangeTurn() { isTurn = !isTurn; }
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameBoard : MonoBehaviour {
 
 	private Dictionary<Location, GameObject> tiles;
-	private AudioClip validMove = null;
+	private AudioClip capturePiece = null;
 	private List<AudioClip> invalidMove = new List<AudioClip>();
 	private Piece activePiece = null;
 	private System.Random rand = new System.Random();
@@ -22,7 +22,7 @@ public class GameBoard : MonoBehaviour {
 		gameObject.transform.parent = Camera.main.transform;
 		mouseMovement = gameObject.AddComponent<MouseMovement>();
 		audioSource = gameObject.AddComponent<AudioSource>();
-		validMove = Resources.Load<AudioClip>("Sounds/test_click");
+		capturePiece = Resources.Load<AudioClip>("Sounds/test_click");
 		invalidMove.Add(Resources.Load<AudioClip>("Sounds/no_1"));
 		invalidMove.Add(Resources.Load<AudioClip>("Sounds/no_2"));
 	}
@@ -32,13 +32,15 @@ public class GameBoard : MonoBehaviour {
 		if (Input.GetMouseButtonDown(1)) DeselectPiece(); // Right click to deselect a piece
 	}
 
+	public AudioSource GetAudioSource() { return audioSource; }
+
 	public void TileClicked(Tile tile) {
 		if (activePiece == null && !TurnManager.IsValidPieceSelection(tile.GetPiece())) 
 			return;
 
 		if (tile.HasPiece()) {
 			if (activePiece == null) {
-                Debug.Log(tile.ToString());
+                // Debug.Log(tile.ToString());
                 activePiece = tile.GetPiece();
                 mouseMovement.SetSelectedPiece(activePiece);
 			}
@@ -51,7 +53,7 @@ public class GameBoard : MonoBehaviour {
 
                 // If the piece color of the active piece matches the clicked piece, swap active pieces
                 else if (activePiece.GetColor() == tile.GetPiece().GetComponent<Piece>().GetColor()) {
-                    Debug.Log(tile.ToString());
+                    // Debug.Log(tile.ToString());
                     mouseMovement.RemoveSelectedPiece();
                     activePiece = tile.GetPiece();
 					mouseMovement.SetSelectedPiece(activePiece);
@@ -59,7 +61,7 @@ public class GameBoard : MonoBehaviour {
 
 				// If the clicked tile is a valid movement for piece
 				else if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
-                    audioSource.PlayOneShot(validMove);
+                    audioSource.PlayOneShot(capturePiece);
 					GameManager.PieceCaptured(tile.GetPiece());
                     activePiece.MovePiece(tile);
                     DeselectPiece();
@@ -76,7 +78,7 @@ public class GameBoard : MonoBehaviour {
 		else {
 			if (activePiece != null) {
 				if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
-                    audioSource.PlayOneShot(validMove);
+                    // audioSource.PlayOneShot(validMove);
                     activePiece.MovePiece(tile);
                     DeselectPiece();
 					TurnManager.ChangeTurn();

@@ -17,7 +17,9 @@ public class TurnManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (!gameIsRunning) {
+
+		}
 	}
 
 	public static void InitTurnManager(Player p1, Player p2) {

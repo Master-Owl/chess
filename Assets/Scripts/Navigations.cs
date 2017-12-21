@@ -12,6 +12,10 @@ public class Navigations : MonoBehaviour {
 		SceneManager.LoadScene(index);
 	}
 
+	public static void LoadSceneByName(string name) {
+		SceneManager.LoadScene(name);
+	}
+
 	public void Quit() {
 		#if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;
