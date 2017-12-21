@@ -61,7 +61,8 @@ public class GameBoard : MonoBehaviour {
 
 				// If the clicked tile is a valid movement for piece
 				else if (activePiece.IsValidMove(tile) && OpenPathTo(tile)) {
-                    audioSource.PlayOneShot(capturePiece);
+                    if (tile.GetPiece().GetPieceType() != Piece.PieceType.KING)
+						audioSource.PlayOneShot(capturePiece);
 					GameManager.PieceCaptured(tile.GetPiece());
                     activePiece.MovePiece(tile);
                     DeselectPiece();

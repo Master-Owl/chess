@@ -9,8 +9,7 @@ public class EndGame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (winner != null)
-			gameObject.GetComponent<Text>().text = winner.ToString() + " Wins!";
+		gameObject.GetComponent<Text>().text = winner.ToString() + " Wins!";
 		AudioSource source = gameObject.AddComponent<AudioSource>();
 		source.clip = Resources.Load<AudioClip>("Sounds/jscottrakozy");
 		source.Play();
