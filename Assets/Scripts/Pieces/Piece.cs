@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Piece : MonoBehaviour {
-    public enum PieceType { KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN };
+    public enum PieceType { PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING };
    
     protected Sprite[] sprites = null;
     protected Tile tile;

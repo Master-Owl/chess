@@ -10,8 +10,17 @@ public class UIManager : MonoBehaviour {
 	public GameObject player2_Name;
 	public GameObject player2_CapturedPiecesBox;
 
+	private Dictionary<Piece.PieceType, int> player1_CapturedPieces = new Dictionary<Piece.PieceType, int>();
+	private Dictionary<Piece.PieceType, int> player2_CapturedPieces = new Dictionary<Piece.PieceType, int>();
+	
+	private const string CAPTURED_PIECES_TEXT = "Captured Pieces:";
+
 	// Use this for initialization
 	void Start () {
+		foreach (Piece.PieceType type in System.Enum.GetValues(typeof(Piece.PieceType))){
+			player1_CapturedPieces[type] = 0;
+			player2_CapturedPieces[type] = 0;
+		}
 	}
 	
 	// Update is called once per frame
@@ -39,11 +48,39 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public void AddCapturedPiece_P1(string piece) {
-		player1_CapturedPiecesBox.GetComponent<Text>().text += '\n' + piece;
-	}
+	public void AddCapturedPiece_P1(Piece piece) {
+		player1_CapturedPieces[piece.GetPieceType()]++;
+		string[] capturedList = new string[5];
+        int idx = -1;
 
-    public void AddCapturedPiece_P2(string piece) {
-        player2_CapturedPiecesBox.GetComponent<Text>().text += '\n' + piece;
+        foreach (Piece.PieceType type in System.Enum.GetValues(typeof(Piece.PieceType))) {
+			if (player1_CapturedPieces[type] != 0){
+                capturedList[++idx] = type.ToString() + " (" + player1_CapturedPieces[type] + ")";
+            }
+		}
+
+        Text boxText = player1_CapturedPiecesBox.GetComponent<Text>();
+        boxText.text = CAPTURED_PIECES_TEXT;
+        for (int i = 0; i <= idx; ++i) {
+            boxText.text += '\n' + capturedList[i];
+        }
+    }
+
+    public void AddCapturedPiece_P2(Piece piece) {
+        player2_CapturedPieces[piece.GetPieceType()]++;
+        string[] capturedList = new string[5];
+        int idx = -1;
+
+        foreach (Piece.PieceType type in System.Enum.GetValues(typeof(Piece.PieceType))) {
+            if (player2_CapturedPieces[type] != 0) {
+                capturedList[++idx] = type.ToString() + " (" + player2_CapturedPieces[type] + ")";
+            }
+        }
+
+		Text boxText = player2_CapturedPiecesBox.GetComponent<Text>();
+		boxText.text = CAPTURED_PIECES_TEXT;
+        for (int i = 0; i <= idx; ++i) {
+            boxText.text += '\n' + capturedList[i];
+        }
     }
 }

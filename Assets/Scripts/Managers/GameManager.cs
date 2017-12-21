@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	private GameBoard gameBoard;
-	private UIManager uIManager;
+	private static UIManager uIManager;
 	private static Player player_1;
 	private static Player player_2;
 
@@ -39,10 +39,12 @@ public class GameManager : MonoBehaviour {
 		if (player_1.IsTurn()) {
 			if (!player_2.RemovePiece(piece))
 				Debug.LogWarning(piece.ToString() + " doesn't exist in collection for " + player_2.ToString());
+			else uIManager.AddCapturedPiece_P1(piece);
 		}
 		else {
 			if (!player_1.RemovePiece(piece))
 				Debug.LogWarning(piece.ToString() + " doesn't exist in collection for " + player_1.ToString());
+			else uIManager.AddCapturedPiece_P2(piece);
 		}
 	}
 	
